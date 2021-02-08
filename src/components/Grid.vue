@@ -39,7 +39,11 @@
         </div>
       </div>
     </div>
-    <div><button class="button-md text-lg">Simulate Pandemic</button></div>
+    <div>
+      <button class="button-md text-lg" @click.prevent="startSimulation">
+        Simulate Pandemic
+      </button>
+    </div>
   </div>
 </template>
 
@@ -68,6 +72,12 @@ export default {
         return
       }
       this.$store.dispatch('changeState', { rowI, cellI, action: this.actionInput })
+    },
+    startSimulation() {
+      this.$store.dispatch('infectNext')
+      const pandemic = setInterval(() => this.$store.dispatch('infectNext'), 2 * 250)
+      // ! REDO!
+      setTimeout(() => clearInterval(pandemic), 10 * 1000)
     }
   }
 }
