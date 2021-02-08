@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h4>This is home!</h4>
     <PandemicSimulator />
   </div>
 </template>

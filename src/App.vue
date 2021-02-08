@@ -19,8 +19,8 @@
       </nav>
     </header>
     <router-view class="flex-1" />
-    <footer class="flex-0 mt-6">
-      <h1 class="p-5 bg-green-100 text-xl font-medium">Pandemic Simulator</h1>
+    <footer class="flex-0 mt-24">
+      <h5 class="p-5 bg-green-100 text-xl font-medium">Pandemic Simulator</h5>
     </footer>
   </main>
 </template>
