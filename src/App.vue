@@ -1,31 +1,54 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <main
+    id="app"
+    class="text-vblue antialiased text-center font-sans flex flex-col justify-between"
+  >
+    <header>
+      <nav
+        class="p-5 mb-4 bg-green-50 shadow-md flex justify-center items-center text-xl xs:text-2xl"
+      >
+        <img
+          alt="virus logo"
+          src="./assets/virus.svg"
+          class="w-1/4 xs:max-w-sm-icon sm:max-w-md-icon inline-block"
+        />
+        <ul class="flex w-3/4 justify-center">
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/about">About</router-link></li>
+        </ul>
+      </nav>
+    </header>
+    <router-view class="flex-1" />
+    <footer class="flex-0 mt-6">
+      <h1 class="p-5 bg-green-100 text-xl font-medium">Pandemic Simulator</h1>
+    </footer>
+  </main>
 </template>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  height: 100vh;
 }
 
-#nav {
-  padding: 30px;
+a {
+  @apply text-vblue font-bold;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  &.router-link-exact-active {
+    @apply text-vgreen;
+  }
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
+nav {
+  ul {
+    li::after {
+      content: '|';
+      padding: 0 1rem;
+      @apply font-normal;
+    }
+
+    li:last-child::after {
+      content: '';
+      padding: 0;
     }
   }
 }
