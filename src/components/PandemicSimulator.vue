@@ -4,33 +4,48 @@
     <form @submit.prevent="createGrid">
       <label for="height" class="text-lg block">Height:</label>
       <input
-        v-model.number="height"
+        v-model.number="heightInput"
         id="height"
         type="number"
         class="text-lg border-2 rounded my-2 p-1"
       />
       <label for="width" class="text-lg block">Width:</label>
       <input
-        v-model.number="width"
+        v-model.number="widthInput"
         id="width"
         type="number"
         class="text-lg border-2 rounded my-2 p-1"
       />
-      <button class="text-xl border-8 rounded block m-auto mt-4 p-2">Create Grid</button>
+      <button class="button-lg mt-4">Create Grid</button>
+      <Grid />
     </form>
   </section>
 </template>
 
 <script>
+import Grid from '@C/Grid.vue'
+
 export default {
   name: 'PandemicSimulator',
+  components: { Grid },
   data: () => ({
-    height: null,
-    width: null
+    heightInput: null,
+    widthInput: null
   }),
   methods: {
     createGrid() {
-      console.log('ok grid is here')
+      if (!Number.isInteger(this.heightInput) || !Number.isInteger(this.widthInput)) {
+        console.log('no height/width')
+        //! Add height error message
+        return
+      }
+
+      this.$store.dispatch('createGrid', {
+        height: this.heightInput,
+        width: this.widthInput
+      })
+      this.heightInput = null
+      this.widthInput = null
     }
   }
 }
