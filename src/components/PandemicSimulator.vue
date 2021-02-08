@@ -40,6 +40,14 @@ export default {
         return
       }
 
+      if (this.heightInput > 128 || this.widthInput > 128) {
+        console.log('number too big')
+        //! Add number too big error message
+        this.heightInput = null
+        this.widthInput = null
+        return
+      }
+
       this.$store.dispatch('createGrid', {
         height: this.heightInput,
         width: this.widthInput
