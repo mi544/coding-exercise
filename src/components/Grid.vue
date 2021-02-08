@@ -10,6 +10,7 @@
             id="infection-radio"
             value="infection"
             v-model="actionInput"
+            checked="true"
           />
           <label for="infection-radio">Infection</label>
         </div>
@@ -48,7 +49,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Grid',
   data: () => ({
-    actionInput: null
+    actionInput: 'infection'
   }),
   computed: {
     ...mapGetters(['height', 'width', 'grid', 'isGrid'])
