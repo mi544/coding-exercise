@@ -1,6 +1,8 @@
 <template>
   <section>
-    <h2 class="text-2xl mb-8">Please enter your desired 2-D grid size:</h2>
+    <h2 class="text-2xl m-auto mb-8 max-w-3/4">
+      Please enter your desired 2-D grid size:
+    </h2>
     <form @submit.prevent="createGrid">
       <label for="height" class="text-lg block">Height:</label>
       <input

@@ -1,9 +1,10 @@
 <template v-if="isGrid">
-  <div class="flex justify-around my-24">
+  <div
+    class="flex flex-col md:flex-row justify-around md:justify-evenly items-center md:items-start mt-4 md:my-24"
+  >
     <div>
-      <p>pick what to do:</p>
       <form>
-        <div>
+        <div class="border-4 my-1 p-1 pt-2 rounded-lg">
           <input
             type="radio"
             name="action"
@@ -12,9 +13,9 @@
             v-model="actionInput"
             checked="true"
           />
-          <label for="infection-radio">Infection</label>
+          <label for="infection-radio" class="text-lg">Infection</label>
         </div>
-        <div>
+        <div class="border-4 my-1 p-1 pt-2 rounded-lg">
           <input
             type="radio"
             name="action"
@@ -22,7 +23,7 @@
             value="immune"
             v-model="actionInput"
           />
-          <label for="immune-radio">Immune</label>
+          <label for="immune-radio" class="text-lg">Immune</label>
         </div>
       </form>
     </div>
@@ -34,14 +35,15 @@
           :class="[showLabel(cell.value)]"
           :data-index="cell.id"
           @click="changeState"
-        >
-          .
-        </div>
+        ></div>
       </div>
     </div>
     <div>
       <button class="button-md text-lg" @click.prevent="startSimulation">
         Simulate Pandemic
+      </button>
+      <button v-if="isGrid" class="button-md text-lg my-6" @click.prevent="resetGrid">
+        Reset
       </button>
     </div>
   </div>
@@ -53,7 +55,8 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Grid',
   data: () => ({
-    actionInput: 'infection'
+    actionInput: 'infection',
+    pandemicInterval: null
   }),
   computed: {
     ...mapGetters(['height', 'width', 'grid', 'isGrid'])
@@ -75,10 +78,18 @@ export default {
       this.$store.dispatch('changeState', { rowI, cellI, action: this.actionInput })
     },
     startSimulation() {
+      clearInterval(this.pandemicInterval)
       this.$store.dispatch('infectNext')
-      const pandemic = setInterval(() => this.$store.dispatch('infectNext'), 2 * 250)
+      this.pandemicInterval = setInterval(
+        () => this.$store.dispatch('infectNext'),
+        2 * 250
+      )
       // ! REDO!
-      setTimeout(() => clearInterval(pandemic), 10 * 1000)
+      setTimeout(() => clearInterval(this.pandemicInterval), 10 * 1000)
+    },
+    resetGrid() {
+      clearInterval(this.pandemicInterval)
+      this.$store.dispatch('createGrid', { height: this.height, width: this.width })
     }
   }
 }
@@ -103,10 +114,10 @@ export default {
   }
 }
 .infection {
-  @apply bg-red-200;
+  @apply bg-red-300;
 }
 
 .immune {
-  @apply bg-blue-200;
+  @apply bg-green-300;
 }
 </style>

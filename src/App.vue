@@ -55,4 +55,10 @@ nav {
 .button-md {
   @apply text-lg border-4 rounded block m-auto p-2;
 }
+
+input[type='radio'] {
+  border: 0px;
+  width: 100%;
+  height: 1.3em;
+}
 </style>
