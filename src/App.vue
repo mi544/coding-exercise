@@ -1,7 +1,7 @@
 <template>
   <main
     id="app"
-    class="text-vblue antialiased text-center font-sans flex flex-col justify-between"
+    class="text-vblue antialiased text-center font-sans flex flex-col justify-evenly"
   >
     <header>
       <nav
@@ -26,10 +26,6 @@
 </template>
 
 <style lang="scss">
-#app {
-  height: 100vh;
-}
-
 a {
   @apply text-vblue font-bold;
 
@@ -51,5 +47,12 @@ nav {
       padding: 0;
     }
   }
+}
+
+.button-lg {
+  @apply text-xl border-8 rounded block m-auto p-2;
+}
+.button-md {
+  @apply text-lg border-4 rounded block m-auto p-2;
 }
 </style>
