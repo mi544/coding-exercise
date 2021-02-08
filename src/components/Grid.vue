@@ -69,6 +69,7 @@ export default {
       const [rowI, cellI] = event.target.dataset.index.split('.')
       if (this.actionInput !== 'infection' && this.actionInput !== 'immune') {
         // ! SHOW ERROR
+        // ! NO RADIO BTN SELECTED
         return
       }
       this.$store.dispatch('changeState', { rowI, cellI, action: this.actionInput })

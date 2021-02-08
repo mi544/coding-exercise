@@ -52,7 +52,11 @@ export default new Vuex.Store({
       }
       commit('SET_GRID_LAYOUT', grid)
     },
-    changeState({ commit }, { rowI, cellI, action }) {
+    changeState({ state, commit }, { rowI, cellI, action }) {
+      if (state.grid[rowI][cellI].value === action) {
+        commit('SET_CELL_STATE', { rowI, cellI, action: null })
+        return
+      }
       commit('SET_CELL_STATE', { rowI, cellI, action })
     },
     infectNext({ state, commit }) {
