@@ -49,7 +49,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Grid from '@C/Grid.vue'
+import Grid from './Grid.vue'
 
 export default {
   name: 'PandemicSimulator',
@@ -62,19 +62,25 @@ export default {
   methods: {
     createGrid() {
       if (!Number.isInteger(this.heightInput) || !Number.isInteger(this.widthInput)) {
-        this.$store.dispatch('showError', 'No height or width provided')
+        this.$store.dispatch('showError', 'Please provide width and height')
         return
       }
 
       if (this.heightInput > 128 || this.widthInput > 128) {
-        this.$store.dispatch('showError', 'Number provided is too big')
+        this.$store.dispatch(
+          'showError',
+          'Number provided is too big, please provide a number less than 128'
+        )
         this.heightInput = null
         this.widthInput = null
         return
       }
 
       if (this.heightInput < 0 || this.widthInput < 0) {
-        this.$store.dispatch('showError', 'Number provided is too small')
+        this.$store.dispatch(
+          'showError',
+          'Number provided is too small, please provide a number greater than 1'
+        )
         this.heightInput = null
         this.widthInput = null
         return
