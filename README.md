@@ -9,6 +9,9 @@
 ![license badge](https://img.shields.io/github/license/mi544/coding-exercise?style=for-the-badge)
 ![online status badge](https://img.shields.io/website?down_color=lightgrey&style=for-the-badge&url=http%3A%2F%2Fec2-3-19-242-208.us-east-2.compute.amazonaws.com%2F)
 
+You can access the deployed version of Pandemic Simulator here:  
+[Pandemic Simulator](http://ec2-3-19-242-208.us-east-2.compute.amazonaws.com/)
+
 ## Table of Contents
 
 - [Description](#Description)
@@ -87,6 +90,8 @@ cd server && node index.js
 ```
 
 You can optionally pass in the `PORT` as an environment variable depending on the system.
+
+The app is currently deployed to an EC2 AWS Instance.
 
 ## Usage
 
