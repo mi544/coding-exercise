@@ -11,7 +11,8 @@ export default new Vuex.Store({
     previousGrid: null,
     height: null,
     width: null,
-    pandemicInProgress: false
+    pandemicInProgress: false,
+    pandemicDate: null
   },
   getters: {
     grid(state) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     pandemicInProgress(state) {
       return state.pandemicInProgress
+    },
+    pandemicDate(state) {
+      return state.pandemicDate
     }
   },
   mutations: {
@@ -49,8 +53,11 @@ export default new Vuex.Store({
     TOGGLE_PANDEMIC_IN_PROGRESS(state, value) {
       state.pandemicInProgress = value
     },
-    COPY_GRID(state) {
-      state.previousGrid = state.grid.slice()
+    COPY_GRID_AND_STRINGIFY(state) {
+      state.previousGrid = JSON.stringify(state.grid)
+    },
+    SET_PANDEMIC_DATE(state, date) {
+      state.pandemicDate = date
     }
   },
   actions: {
@@ -77,7 +84,7 @@ export default new Vuex.Store({
     },
     infectNext({ state, commit }) {
       return new Promise((resolve) => {
-        commit('COPY_GRID')
+        commit('COPY_GRID_AND_STRINGIFY')
         const dimensions = { width: this.state.width, height: this.state.height }
         const infectedCells = []
         // gather all infected cells coordinates
@@ -96,7 +103,7 @@ export default new Vuex.Store({
           infect({ rowI, cellI }, 'bottom', state.grid, dimensions, commit)
         })
         // check if any changes were made and return the result
-        resolve(JSON.stringify(state.grid) === JSON.stringify(state.previousGrid))
+        resolve(JSON.stringify(state.grid) === state.previousGrid)
       })
     }
   }
