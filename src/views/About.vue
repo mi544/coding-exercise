@@ -9,15 +9,27 @@
         viruses travel and infect everything around them.
       </p>
     </article>
-    <article class="bg-blue-50 w-3/4 md:w-1/3 mx-auto md:ml-12 p-6 shadow-lg">
-      <p class="text-xl">
-        With the slick and light design, as well as intricate logic behind the scenes, it
-        aims to show how simple and quick an app can be developed in Vue with TailwindCSS.
+    <article
+      class="bg-blue-50 w-3/4 md:w-1/2 mx-auto my-8 md:ml-24 p-8 md:p-14 md:px-24 shadow-lg"
+    >
+      <p class="text-xl mt-4">
+        To use this app, enter your desired 2-D grid dimensions in the
+        <span class="italic">`height`</span> and
+        <span class="italic">`width`</span> fields, then press the
+        <span class="font-semibold">`Create Grid`</span> button.
       </p>
       <p class="text-xl mt-8">
-        Please find the instructions on how to use this app on the
-        <router-link to="/" class="underline">Home Page</router-link> by clicking on the
-        <span class="font-semibold">'Instructions'</span> button.
+        Set the points of intial virus outbreak, as well as immune points, and start the
+        pandemic by pressing the
+        <span class="font-semibold">`Simulate Pandemic`</span> button!
+      </p>
+      <p class="text-xl mt-4">Watch the virus spread as days pass.</p>
+      <p class="text-xl mt-8 md:px-8">
+        To restart the pandemic, press the
+        <span class="font-semibold">`Reset`</span> button and start over.
+      </p>
+      <p class="text-2xl mt-6">
+        <router-link to="/" class="underline">Ready to try it out?</router-link>
       </p>
     </article>
     <article class="bg-blue-50 w-3/4 md:w-1/2 mx-auto mt-12 p-6 shadow-md">
