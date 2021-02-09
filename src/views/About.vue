@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <article
-      class="bg-blue-50 w-3/4 md:w-1/2 ml-auto mr-8 mt-4 mb-12 md:mb-2 p-6 shadow-xl"
+      class="bg-blue-50 w-3/4 md:w-1/2 mx-auto md:mr-8 mt-4 mb-12 md:mb-2 p-6 shadow-xl"
     >
       <img src="../assets/virus2.svg" alt="virus icon" class="max-w-1/3 mx-auto" />
       <p class="text-xl my-4">
@@ -9,7 +9,7 @@
         viruses travel and infect everything around them.
       </p>
     </article>
-    <article class="bg-blue-50 w-3/4 md:w-1/3 mr-auto ml-12 p-6 shadow-lg">
+    <article class="bg-blue-50 w-3/4 md:w-1/3 mx-auto md:ml-12 p-6 shadow-lg">
       <p class="text-xl">
         With the slick and light design, as well as intricate logic behind the scenes, it
         aims to show how simple and quick an app can be developed in Vue with TailwindCSS.
