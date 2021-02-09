@@ -7,6 +7,12 @@ import './index.css'
 
 Vue.config.productionTip = false
 
+if (process.env.NODE_ENV === 'production') {
+  Vue.config.devtools = false
+  Vue.config.debug = false
+  Vue.config.silent = true
+}
+
 new Vue({
   router,
   store,

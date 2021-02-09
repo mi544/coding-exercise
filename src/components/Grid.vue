@@ -145,10 +145,10 @@ export default {
       }, 1 * 1000)
     },
     resetGrid() {
+      this.$store.commit('SET_PANDEMIC_DATE', null)
       this.$store.commit('SET_MAXIMUM_INFECTION', false)
       clearInterval(this.pandemicInterval)
       this.$store.dispatch('createGrid', { height: this.height, width: this.width })
-      this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
     }
   }
 }
