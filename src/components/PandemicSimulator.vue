@@ -80,13 +80,13 @@ export default {
         return
       }
 
+      this.$store.commit('SET_PANDEMIC_DATE', null)
+      this.$store.commit('SET_MAXIMUM_INFECTION', false)
       this.$store.commit('SET_ERROR', null)
       this.$store.dispatch('createGrid', {
         height: this.heightInput,
         width: this.widthInput
       })
-
-      this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
 
       this.heightInput = null
       this.widthInput = null

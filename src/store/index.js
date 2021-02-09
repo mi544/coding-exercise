@@ -14,7 +14,8 @@ export default new Vuex.Store({
     pandemicInProgress: false,
     pandemicDate: null,
     error: null,
-    errorTimer: null
+    errorTimer: null,
+    maximumInfection: null
   },
   getters: {
     grid(state) {
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     error(state) {
       return state.error
+    },
+    maximumInfection(state) {
+      return state.maximumInfection
     }
   },
   mutations: {
@@ -65,6 +69,9 @@ export default new Vuex.Store({
     },
     SET_ERROR(state, error) {
       state.error = error
+    },
+    SET_MAXIMUM_INFECTION(state, infectionState) {
+      state.maximumInfection = infectionState
     }
   },
   actions: {

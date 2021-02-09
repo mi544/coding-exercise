@@ -55,7 +55,8 @@
       >
         Reset
       </button>
-      <p>{{ date }}</p>
+      <p v-if="maximumInfection">Maximum infection reached on</p>
+      <p v-if="pandemicDate">{{ date }}</p>
     </div>
   </div>
 </template>
@@ -77,7 +78,8 @@ export default {
       'previousGrid',
       'isGrid',
       'pandemicInProgress',
-      'pandemicDate'
+      'pandemicDate',
+      'maximumInfection'
     ]),
     date() {
       const time = new Date(this.pandemicDate)
@@ -134,6 +136,7 @@ export default {
         if (result) {
           this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', false)
           clearInterval(this.pandemicInterval)
+          this.$store.commit('SET_MAXIMUM_INFECTION', true)
           return
         }
         // adding 1 day to the date
@@ -142,6 +145,7 @@ export default {
       }, 1 * 1000)
     },
     resetGrid() {
+      this.$store.commit('SET_MAXIMUM_INFECTION', false)
       clearInterval(this.pandemicInterval)
       this.$store.dispatch('createGrid', { height: this.height, width: this.width })
       this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
