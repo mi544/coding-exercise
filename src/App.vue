@@ -26,6 +26,14 @@
 </template>
 
 <style lang="scss">
+#app {
+  min-height: 100vh;
+}
+
+button[disabled] {
+  @apply bg-gray-100;
+}
+
 a {
   @apply text-vblue font-bold;
 
