@@ -1,4 +1,4 @@
-<template v-if="isGrid">
+<template>
   <div
     class="flex flex-col md:flex-row justify-around md:justify-evenly items-center md:items-start mt-4 md:my-24"
   >
@@ -49,14 +49,13 @@
         Simulate Pandemic
       </button>
       <button
-        v-if="isGrid"
         class="button-md text-lg my-6"
         @click.prevent="resetGrid"
         :disabled="pandemicInProgress"
       >
         Reset
       </button>
-      <p v-if="isGrid">{{ date }}</p>
+      <p>{{ date }}</p>
     </div>
   </div>
 </template>
@@ -109,6 +108,23 @@ export default {
       this.$store.dispatch('changeState', { rowI, cellI, action: this.actionInput })
     },
     startSimulation() {
+      this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
+      // ! check if there's at least one infection on the grid
+      let infectedCells = 0
+      this.grid.forEach((row) => {
+        row.forEach((cell) => {
+          if (cell.value === 'infection') {
+            infectedCells += 1
+          }
+        })
+      })
+
+      if (infectedCells === 0) {
+        // ! SHOW ERROR
+        // ! NO INFECTED CELLS SELECTED
+        return
+      }
+
       clearInterval(this.pandemicInterval)
       this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', true)
 

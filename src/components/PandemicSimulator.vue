@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2 class="text-2xl m-auto mb-8 max-w-3/4">
+    <h2 class="text-2xl m-auto mb-8 max-w-5/6">
       Please enter your desired 2-D grid size:
     </h2>
     <form @submit.prevent="createGrid">
@@ -21,7 +21,7 @@
         :disabled="pandemicInProgress"
       />
       <button class="button-lg mt-4" :disabled="pandemicInProgress">Create Grid</button>
-      <Grid />
+      <Grid v-if="isGrid" />
     </form>
   </section>
 </template>
@@ -37,7 +37,7 @@ export default {
     heightInput: null,
     widthInput: null
   }),
-  computed: { ...mapGetters(['pandemicInProgress']) },
+  computed: { ...mapGetters(['pandemicInProgress', 'isGrid']) },
   methods: {
     createGrid() {
       if (!Number.isInteger(this.heightInput) || !Number.isInteger(this.widthInput)) {
