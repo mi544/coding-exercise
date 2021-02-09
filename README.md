@@ -53,7 +53,7 @@ When there's at least one infected cell, the user can click the `Simulate Pandem
 
 Every second of the infection spreading out equals to one day, and there's a date indicator to the right of the grid showing the exact day of the pandemic, starting from today.
 
-The infection spreads as far as it can taking all the cells not protected by immune cells and shows the result - the full date when it reached maximum infection.
+The infection spreads as far as it can taking all the cells not protected by immune cells. When changes are no longer being made in the grid, the infection stops and shows the result - the full date when it reached maximum infection.
 
 The user can then reset the grid to delete all immune and infected cells, or enter new values in the input fields to define new dimensions for the grid.
 
