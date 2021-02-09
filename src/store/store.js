@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import Vue from 'vue'
-import { infect } from '../utils'
+import { infectCell } from '../utils'
 
 export const state = {
   grid: null,
@@ -110,10 +110,10 @@ export const actions = {
       })
       // infect all adjacent cells
       infectedCells.forEach(({ rowI, cellI }) => {
-        infect({ rowI, cellI }, 'left', state.grid, dimensions, commit)
-        infect({ rowI, cellI }, 'right', state.grid, dimensions, commit)
-        infect({ rowI, cellI }, 'top', state.grid, dimensions, commit)
-        infect({ rowI, cellI }, 'bottom', state.grid, dimensions, commit)
+        infectCell({ rowI, cellI }, 'left', state.grid, dimensions, commit)
+        infectCell({ rowI, cellI }, 'right', state.grid, dimensions, commit)
+        infectCell({ rowI, cellI }, 'top', state.grid, dimensions, commit)
+        infectCell({ rowI, cellI }, 'bottom', state.grid, dimensions, commit)
       })
       // check if any changes were made and return the result
       resolve(JSON.stringify(state.grid) === state.previousGrid)
