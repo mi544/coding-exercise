@@ -8,12 +8,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     grid: null,
+    previousGrid: null,
     height: null,
-    width: null
+    width: null,
+    pandemicInProgress: false
   },
   getters: {
     grid(state) {
       return state.grid
+    },
+    previousGrid(state) {
+      return state.previousGrid
     },
     height(state) {
       return state.height
@@ -23,6 +28,9 @@ export default new Vuex.Store({
     },
     isGrid(state) {
       return state.grid !== null
+    },
+    pandemicInProgress(state) {
+      return state.pandemicInProgress
     }
   },
   mutations: {
@@ -34,7 +42,15 @@ export default new Vuex.Store({
       state.grid = grid
     },
     SET_CELL_STATE(state, { rowI, cellI, action }) {
-      state.grid[rowI][cellI].value = action
+      // ! need Vue.set() instead
+      // state.grid[rowI][cellI].value = action
+      Vue.set(state.grid[rowI][cellI], 'value', action)
+    },
+    TOGGLE_PANDEMIC_IN_PROGRESS(state, value) {
+      state.pandemicInProgress = value
+    },
+    COPY_GRID(state) {
+      state.previousGrid = state.grid.slice()
     }
   },
   actions: {
@@ -60,23 +76,27 @@ export default new Vuex.Store({
       commit('SET_CELL_STATE', { rowI, cellI, action })
     },
     infectNext({ state, commit }) {
-      const dimensions = { width: this.state.width, height: this.state.height }
-      const infectedCells = []
-      // gather all infected cells' coordinates
-      state.grid.forEach((row, rowI) => {
-        row.forEach((cell, cellI) => {
-          if (cell.value === 'infection') {
-            infectedCells.push({ rowI, cellI })
-          }
+      return new Promise((resolve) => {
+        commit('COPY_GRID')
+        const dimensions = { width: this.state.width, height: this.state.height }
+        const infectedCells = []
+        // gather all infected cells coordinates
+        state.grid.forEach((row, rowI) => {
+          row.forEach((cell, cellI) => {
+            if (cell.value === 'infection') {
+              infectedCells.push({ rowI, cellI })
+            }
+          })
         })
-      })
-      console.log('found all infected cells')
-      // infect all adjacent cells
-      infectedCells.forEach(({ rowI, cellI }) => {
-        infect({ rowI, cellI }, 'left', state.grid, dimensions, commit)
-        infect({ rowI, cellI }, 'right', state.grid, dimensions, commit)
-        infect({ rowI, cellI }, 'top', state.grid, dimensions, commit)
-        infect({ rowI, cellI }, 'bottom', state.grid, dimensions, commit)
+        // infect all adjacent cells
+        infectedCells.forEach(({ rowI, cellI }) => {
+          infect({ rowI, cellI }, 'left', state.grid, dimensions, commit)
+          infect({ rowI, cellI }, 'right', state.grid, dimensions, commit)
+          infect({ rowI, cellI }, 'top', state.grid, dimensions, commit)
+          infect({ rowI, cellI }, 'bottom', state.grid, dimensions, commit)
+        })
+        // check if any changes were made and return the result
+        resolve(JSON.stringify(state.grid) === JSON.stringify(state.previousGrid))
       })
     }
   }
