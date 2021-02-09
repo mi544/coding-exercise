@@ -3,7 +3,9 @@ const colors = require('tailwindcss/colors')
 const width = {
   'sm-icon': '50px',
   'md-icon': '75px',
+  'lg-icon': '100px',
   '1/4': '25%',
+  '1/3': '33.3%',
   '1/2': '50%',
   '3/4': '75%'
 }

@@ -10,6 +10,7 @@
         id="height"
         type="number"
         class="text-lg border-2 rounded my-2 p-1"
+        :disabled="pandemicInProgress"
       />
       <label for="width" class="text-lg block">Width:</label>
       <input
@@ -17,14 +18,16 @@
         id="width"
         type="number"
         class="text-lg border-2 rounded my-2 p-1"
+        :disabled="pandemicInProgress"
       />
-      <button class="button-lg mt-4">Create Grid</button>
+      <button class="button-lg mt-4" :disabled="pandemicInProgress">Create Grid</button>
       <Grid />
     </form>
   </section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Grid from '@C/Grid.vue'
 
 export default {
@@ -34,6 +37,7 @@ export default {
     heightInput: null,
     widthInput: null
   }),
+  computed: { ...mapGetters(['pandemicInProgress']) },
   methods: {
     createGrid() {
       if (!Number.isInteger(this.heightInput) || !Number.isInteger(this.widthInput)) {

@@ -12,6 +12,7 @@
             value="infection"
             v-model="actionInput"
             checked="true"
+            :disabled="pandemicInProgress"
           />
           <label for="infection-radio" class="text-lg">Infection</label>
         </div>
@@ -22,6 +23,7 @@
             id="immune-radio"
             value="immune"
             v-model="actionInput"
+            :disabled="pandemicInProgress"
           />
           <label for="immune-radio" class="text-lg">Immune</label>
         </div>
@@ -34,15 +36,24 @@
           :key="cell.id"
           :class="[showLabel(cell.value)]"
           :data-index="cell.id"
-          @click="changeState"
+          v-on:click="changeState"
         ></div>
       </div>
     </div>
     <div>
-      <button class="button-md text-lg" @click.prevent="startSimulation">
+      <button
+        class="button-md text-lg"
+        @click.prevent="startSimulation"
+        :disabled="pandemicInProgress"
+      >
         Simulate Pandemic
       </button>
-      <button v-if="isGrid" class="button-md text-lg my-6" @click.prevent="resetGrid">
+      <button
+        v-if="isGrid"
+        class="button-md text-lg my-6"
+        @click.prevent="resetGrid"
+        :disabled="pandemicInProgress"
+      >
         Reset
       </button>
     </div>
@@ -59,33 +70,48 @@ export default {
     pandemicInterval: null
   }),
   computed: {
-    ...mapGetters(['height', 'width', 'grid', 'isGrid'])
+    ...mapGetters([
+      'height',
+      'width',
+      'grid',
+      'isGrid',
+      'pandemicInProgress',
+      'previousGrid'
+    ])
   },
   methods: {
     showLabel(value) {
+      // returns proper class based on cell state
       if (value === null) return 'cell'
       if (value === 'immune') return 'cell immune'
       if (value === 'infection') return 'cell infection'
       return 'cell'
     },
     changeState(event) {
-      const [rowI, cellI] = event.target.dataset.index.split('.')
+      // should not be able to adjust the infection once the pandemic has started
+      if (this.pandemicInProgress) return
+
+      // no radio button selected
       if (this.actionInput !== 'infection' && this.actionInput !== 'immune') {
         // ! SHOW ERROR
         // ! NO RADIO BTN SELECTED
         return
       }
+
+      // getting cell coordinates & updating its state
+      const [rowI, cellI] = event.target.dataset.index.split('.')
       this.$store.dispatch('changeState', { rowI, cellI, action: this.actionInput })
     },
-    startSimulation() {
+    async startSimulation() {
       clearInterval(this.pandemicInterval)
-      this.$store.dispatch('infectNext')
-      this.pandemicInterval = setInterval(
-        () => this.$store.dispatch('infectNext'),
-        2 * 250
-      )
-      // ! REDO!
-      setTimeout(() => clearInterval(this.pandemicInterval), 10 * 1000)
+      this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', true)
+
+      // dispatching infection once and setting the timer (hopefully)
+      const result = await this.$store.dispatch('infectNext')
+      console.log('result: ', result)
+
+      // ! increase the date
+      this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', false)
     },
     resetGrid() {
       clearInterval(this.pandemicInterval)
