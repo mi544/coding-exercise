@@ -58,6 +58,9 @@ export default {
         height: this.heightInput,
         width: this.widthInput
       })
+
+      this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
+
       this.heightInput = null
       this.widthInput = null
     }

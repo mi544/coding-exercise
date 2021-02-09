@@ -56,6 +56,7 @@
       >
         Reset
       </button>
+      <p v-if="isGrid">{{ date }}</p>
     </div>
   </div>
 </template>
@@ -74,10 +75,15 @@ export default {
       'height',
       'width',
       'grid',
+      'previousGrid',
       'isGrid',
       'pandemicInProgress',
-      'previousGrid'
-    ])
+      'pandemicDate'
+    ]),
+    date() {
+      const time = new Date(this.pandemicDate)
+      return `${time.getMonth() + 1}/${time.getDate()}/${time.getFullYear()}`
+    }
   },
   methods: {
     showLabel(value) {
@@ -102,20 +108,27 @@ export default {
       const [rowI, cellI] = event.target.dataset.index.split('.')
       this.$store.dispatch('changeState', { rowI, cellI, action: this.actionInput })
     },
-    async startSimulation() {
+    startSimulation() {
       clearInterval(this.pandemicInterval)
       this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', true)
 
-      // dispatching infection once and setting the timer (hopefully)
-      const result = await this.$store.dispatch('infectNext')
-      console.log('result: ', result)
-
-      // ! increase the date
-      this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', false)
+      // setting an interval up to dispatch infections
+      this.pandemicInterval = setInterval(async () => {
+        const result = await this.$store.dispatch('infectNext')
+        if (result) {
+          this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', false)
+          clearInterval(this.pandemicInterval)
+          return
+        }
+        // adding 1 day to the date
+        const nextDay = new Date(this.pandemicDate + 24 * 60 * 60 * 1000)
+        this.$store.commit('SET_PANDEMIC_DATE', nextDay.getTime())
+      }, 1 * 1000)
     },
     resetGrid() {
       clearInterval(this.pandemicInterval)
       this.$store.dispatch('createGrid', { height: this.height, width: this.width })
+      this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
     }
   }
 }
