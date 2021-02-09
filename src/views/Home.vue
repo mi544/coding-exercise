@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PandemicSimulator from '@C/PandemicSimulator.vue'
+import PandemicSimulator from '../components/PandemicSimulator.vue'
 
 export default {
   name: 'Home',
