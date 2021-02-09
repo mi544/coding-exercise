@@ -91,7 +91,7 @@ cd server && node index.js
 
 You can optionally pass in the `PORT` as an environment variable depending on the system.
 
-The app is currently deployed to an EC2 AWS Instance.
+The app is currently deployed to an EC2 AWS Instance with PM2 and Nginx serving as a reverse proxy, with both Nginx and PM2 being initialized on the startup to ensure consistent uptime.
 
 ## Usage
 
