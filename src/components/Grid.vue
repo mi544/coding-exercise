@@ -98,8 +98,7 @@ export default {
 
       // no radio button selected
       if (this.actionInput !== 'infection' && this.actionInput !== 'immune') {
-        // ! SHOW ERROR
-        // ! NO RADIO BTN SELECTED
+        this.$store.dispatch('showError', 'No option selected (infect or immune)')
         return
       }
 
@@ -109,19 +108,20 @@ export default {
     },
     startSimulation() {
       this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
-      // ! check if there's at least one infection on the grid
-      let infectedCells = 0
-      this.grid.forEach((row) => {
-        row.forEach((cell) => {
-          if (cell.value === 'infection') {
-            infectedCells += 1
+      // checks if there's at least one infection on the grid
+      let infectedCells = false
+      for (let i = 0; i < this.grid.length; i += 1) {
+        for (let c = 0; c < this.grid[i].length; c += 1) {
+          if (infectedCells) break
+          if (this.grid[i][c].value === 'infection') {
+            infectedCells = true
+            break
           }
-        })
-      })
+        }
+      }
 
-      if (infectedCells === 0) {
-        // ! SHOW ERROR
-        // ! NO INFECTED CELLS SELECTED
+      if (!infectedCells) {
+        this.$store.dispatch('showError', 'No cells are infected')
         return
       }
 

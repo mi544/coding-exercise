@@ -21,6 +21,27 @@
         :disabled="pandemicInProgress"
       />
       <button class="button-lg mt-4" :disabled="pandemicInProgress">Create Grid</button>
+      <p
+        :class="[
+          error ? 'opacity-1' : 'opacity-0 hidden',
+          'transition-all',
+          'duration-1000',
+          'ease-in-out',
+          'bg-red-200',
+          'mx-auto',
+          'my-6',
+          'max-w-3/4',
+          'md:max-w-1/2',
+          'md:h-20',
+          'h-16',
+          'flex',
+          'justify-center',
+          'items-center',
+          'rounded-lg'
+        ]"
+      >
+        {{ error }}
+      </p>
       <Grid v-if="isGrid" />
     </form>
   </section>
@@ -37,23 +58,29 @@ export default {
     heightInput: null,
     widthInput: null
   }),
-  computed: { ...mapGetters(['pandemicInProgress', 'isGrid']) },
+  computed: { ...mapGetters(['pandemicInProgress', 'isGrid', 'error']) },
   methods: {
     createGrid() {
       if (!Number.isInteger(this.heightInput) || !Number.isInteger(this.widthInput)) {
-        console.log('no height/width')
-        //! Add height error message
+        this.$store.dispatch('showError', 'No height or width provided')
         return
       }
 
       if (this.heightInput > 128 || this.widthInput > 128) {
-        console.log('number too big')
-        //! Add number too big error message
+        this.$store.dispatch('showError', 'Number provided is too big')
         this.heightInput = null
         this.widthInput = null
         return
       }
 
+      if (this.heightInput < 0 || this.widthInput < 0) {
+        this.$store.dispatch('showError', 'Number provided is too small')
+        this.heightInput = null
+        this.widthInput = null
+        return
+      }
+
+      this.$store.commit('SET_ERROR', null)
       this.$store.dispatch('createGrid', {
         height: this.heightInput,
         width: this.widthInput

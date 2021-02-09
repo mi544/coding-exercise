@@ -12,7 +12,9 @@ export default new Vuex.Store({
     height: null,
     width: null,
     pandemicInProgress: false,
-    pandemicDate: null
+    pandemicDate: null,
+    error: null,
+    errorTimer: null
   },
   getters: {
     grid(state) {
@@ -35,6 +37,9 @@ export default new Vuex.Store({
     },
     pandemicDate(state) {
       return state.pandemicDate
+    },
+    error(state) {
+      return state.error
     }
   },
   mutations: {
@@ -46,7 +51,6 @@ export default new Vuex.Store({
       state.grid = grid
     },
     SET_CELL_STATE(state, { rowI, cellI, action }) {
-      // ! need Vue.set() instead
       // state.grid[rowI][cellI].value = action
       Vue.set(state.grid[rowI][cellI], 'value', action)
     },
@@ -58,6 +62,9 @@ export default new Vuex.Store({
     },
     SET_PANDEMIC_DATE(state, date) {
       state.pandemicDate = date
+    },
+    SET_ERROR(state, error) {
+      state.error = error
     }
   },
   actions: {
@@ -105,6 +112,11 @@ export default new Vuex.Store({
         // check if any changes were made and return the result
         resolve(JSON.stringify(state.grid) === state.previousGrid)
       })
+    },
+    showError({ state, commit }, error) {
+      clearTimeout(state.errorTimer)
+      commit('SET_ERROR', error)
+      state.errorTimer = setTimeout(() => commit('SET_ERROR', null), 5 * 1000)
     }
   }
 })
