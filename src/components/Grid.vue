@@ -90,8 +90,8 @@ export default {
     showLabel(value) {
       // returns proper class based on cell state
       if (value === null) return 'cell'
-      if (value === 'immune') return 'cell immune'
-      if (value === 'infection') return 'cell infection'
+      if (value === 'immune') return 'immune cell'
+      if (value === 'infection') return 'infection cell'
       return 'cell'
     },
     changeState(event) {
