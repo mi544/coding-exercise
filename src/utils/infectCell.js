@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-function infect({ rowI, cellI }, direction, grid, dimensions, commit) {
+function infectCell({ rowI, cellI }, direction, grid, dimensions, commit) {
   switch (direction) {
     case 'left':
       if (cellI === 0) {
@@ -42,4 +42,4 @@ function infect({ rowI, cellI }, direction, grid, dimensions, commit) {
   }
 }
 
-export { infect }
+export { infectCell }
