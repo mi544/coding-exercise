@@ -10,7 +10,7 @@
 ![online status badge](https://img.shields.io/website?down_color=lightgrey&style=for-the-badge&url=http%3A%2F%2Fec2-3-19-242-208.us-east-2.compute.amazonaws.com%2F)
 
 You can access the deployed version of Pandemic Simulator here:  
-[Pandemic Simulator](http://ec2-3-19-242-208.us-east-2.compute.amazonaws.com/)
+[Pandemic Simulator](https://p.personal-projects.space/)
 
 ## Table of Contents
 
