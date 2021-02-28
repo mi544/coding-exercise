@@ -1,10 +1,10 @@
 <template>
   <div class="about">
     <article class="article1">
-      <img src="../assets/virus2.svg" alt="virus icon" class="max-w-1/3 mx-auto" />
+      <img src="../assets/hot-spring.svg" alt="virus icon" class="max-w-1/3 mx-auto" />
       <p class="my-4">
-        This simple mini-project allows to see inside the pandemic and understand how
-        viruses travel and infect everything around them.
+        This app allows to dig several hot springs, put some rocks around that area and
+        watch the water spread around, ending up with warm and beautiful hot springs.
       </p>
     </article>
     <article
@@ -17,13 +17,13 @@
         <span class="font-semibold">`Create Grid`</span> button.
       </p>
       <p class="mt-8">
-        Set the points of intial virus outbreak, as well as immune points, and start the
-        pandemic by pressing the
-        <span class="font-semibold">`Simulate Pandemic`</span> button!
+        Set the initial dig points of hot springs, as well as rocks around the area, and
+        start the simulation by pressing the
+        <span class="font-semibold">`Let the water run`</span> button!
       </p>
-      <p class="mt-4">Watch the virus spread as days pass.</p>
+      <p class="mt-4">Watch the water from the hot springs spread as days pass.</p>
       <p class="mt-8 md:px-8">
-        To restart the pandemic, press the
+        To restart the simulation, press the
         <span class="font-semibold">`Reset`</span> button and start over.
       </p>
       <p class="text-xl md:text-2xl mt-6">
@@ -38,7 +38,7 @@
         <span class="font-semibold">TalwindCSS</span>.
       </p>
       <a
-        href="https://github.com/mi544/coding-exercise"
+        href="https://github.com/mi544/hot-springs"
         target="_blank"
         rel="noreferrer noopener"
       >

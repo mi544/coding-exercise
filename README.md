@@ -1,12 +1,12 @@
 # Hot Springs Simulator
 
-|                                                                            |                       |
-| -------------------------------------------------------------------------- | --------------------- |
-| <img src=".github/assets/water.jpg" width="100px" alt="grid screenshot" /> | Hot Springs Simulator |
+|                                                                                 |                       |
+| ------------------------------------------------------------------------------- | --------------------- |
+| <img src=".github/assets/hot-spring.svg" width="100px" alt="grid screenshot" /> | Hot Springs Simulator |
 
 ---
 
-![license badge](https://img.shields.io/github/license/mi544/coding-exercise?style=for-the-badge)
+[![license badge](https://img.shields.io/github/license/mi544/coding-exercise?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![online status badge](https://img.shields.io/website?down_color=lightgrey&down_message=offline&style=for-the-badge&up_color=blue&up_message=online&url=https%3A%2F%2Fhot-springs.personal-projects.space%2F)](https://hot-springs.personal-projects.space/)
 
 You can access the deployed version of Hot Springs Simulator here:  
@@ -129,3 +129,8 @@ sd32@pm.me
 ## Authors
 
 Maksim Verkhoturov
+
+# Attribution
+
+- Hot spring icon made by [smalllikeart](https://flaticon.com/authors/smalllikeart) from [flaticon.com](https://flaticon.com/)
+- Icons for cells made from the official [Steam screenshot](https://cdn.cloudflare.steamstatic.com/steam/apps/297000/ss_548367faf1cfa549c88585cb9b01f13b05b05ab7.1920x1080.jpg) of [Heroes® of Might & Magic® III - HD Edition](https://store.steampowered.com/app/297000/Heroes_of_Might__Magic_III__HD_Edition/) by Maksim Verkhoturov
