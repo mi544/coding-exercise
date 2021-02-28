@@ -1,14 +1,14 @@
 <template>
   <div class="home">
-    <PandemicSimulator />
+    <HotSprings />
   </div>
 </template>
 
 <script>
-import PandemicSimulator from '../components/PandemicSimulator.vue'
+import HotSprings from '../components/HotSprings.vue'
 
 export default {
   name: 'Home',
-  components: { PandemicSimulator }
+  components: { HotSprings }
 }
 </script>

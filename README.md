@@ -1,16 +1,16 @@
-# Pandemic Simulator
+# Hot Springs Simulator
 
-|                                                                      |                    |
-| -------------------------------------------------------------------- | ------------------ |
-| <img src="./assets/virus.svg" width="100px" alt="grid screenshot" /> | Pandemic Simulator |
+|                                                                                 |                       |
+| ------------------------------------------------------------------------------- | --------------------- |
+| <img src=".github/assets/hot-spring.svg" width="100px" alt="grid screenshot" /> | Hot Springs Simulator |
 
 ---
 
-![license badge](https://img.shields.io/github/license/mi544/coding-exercise?style=for-the-badge)
-![online status badge](https://img.shields.io/website?down_color=lightgrey&style=for-the-badge&url=http%3A%2F%2Fec2-3-19-242-208.us-east-2.compute.amazonaws.com%2F)
+[![license badge](https://img.shields.io/github/license/mi544/coding-exercise?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
+[![online status badge](https://img.shields.io/website?down_color=lightgrey&down_message=offline&style=for-the-badge&up_color=blue&up_message=online&url=https%3A%2F%2Fhot-springs.personal-projects.space%2F)](https://hot-springs.personal-projects.space/)
 
-You can access the deployed version of Pandemic Simulator here:  
-[Pandemic Simulator](https://p.personal-projects.space/)
+You can access the deployed version of Hot Springs Simulator here:  
+[Hot Springs Simulator](https://hot-springs.personal-projects.space/)
 
 ## Table of Contents
 
@@ -28,17 +28,17 @@ You can access the deployed version of Pandemic Simulator here:
 
 This is a Full-Stack (mainly Front-End) application that takes user input of dimensions (`height` and `width`) and renders a grid.
 
-The user can then set `infection points` and `immune points` to outline the starting points of a pandemic.
+The user can then set `dig points` and `rocks points` to outline the starting points of hot springs.
 
-With those points laid out on the grid, the user can press the `Simulate Pandemic` button to start a simulation of a pandemic.
+With those points laid out on the grid, the user can press the `Let the water run` button to start a simulation of hot springs.
 
-The infection will be spreading to adjacent cells every second, infecting them and in turn causing them to start spreading the infection.
+The water will be spreading to adjacent cells every second and in turn will be causing them to start spreading the water too.
 
-Immune points will remain untouched by the infection. They, however, will not spread.
+Rocks points will remain untouched by the water. These points act as block points.
 
-| ->                                     | ->                                     | ->                                     |
-| -------------------------------------- | -------------------------------------- | -------------------------------------- |
-| ![grid screenshot](./assets/grid1.png) | ![grid screenshot](./assets/grid2.png) | ![grid screenshot](./assets/grid3.png) |
+| ->                                             | ->                                             | ->                                             |
+| ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
+| ![grid screenshot 1](.github/assets/grid1.png) | ![grid screenshot 2](.github/assets/grid2.png) | ![grid screenshot 3](.github/assets/grid3.png) |
 
 ---
 
@@ -48,22 +48,22 @@ It is a Vue.js (v2) application that utilizes Vuex store extensively.
 
 `App.vue` is the first component to load, and it mainly takes care of the routes, as well as information that should be displayed on all the pages.
 
-All the logic happens inside of the `Grid.vue` and `PandemicSimulator.vue` components. `PandemicSimulator` takes user input (dimensions of the grid), passes it to Vuex, and invokes the `Grid` component to render a grid.
+All the logic happens inside of the `Grid.vue` and `HotSprings.vue` components. `HotSprings` takes user input (dimensions of the grid) and passes it to the Vuex store.
 
 The `Grid` component renders the grid and allows to interact with it by clicking on the cells directly.
-The user can choose which points should be infected, and which points - immune.
-When there's at least one infected cell, the user can click the `Simulate Pandemic` button to start infecting adjacent cells.
+The user can choose which points should be hot spring starting points, and which points should be rocks.
+So long as there's at least one hot spring starting point cell on the grid, the user can click the `Let the water run` button to start spreading the water.
 
-Every second of the infection spreading out equals to one day, and there's a date indicator to the right of the grid showing the exact day of the pandemic, starting from today.
+Every `750ms` of the simulation equals to one day, and there's a date indicator to the right of the grid showing the exact day of the simulation starting from today.
 
-The infection spreads as far as it can taking all the cells not protected by immune cells. When changes are no longer being made in the grid, the infection stops and shows the result - the full date when it reached maximum infection.
+The hot springs spread as far as they can taking all the cells not protected by rocks cells. When changes are no longer being made on the grid, the water stops and shows the result - the full date when the water from hot springs finished spreading.
 
-The user can then reset the grid to delete all immune and infected cells, or enter new values in the input fields to define new dimensions for the grid.
+The user can then reset the grid to delete all rocks and dig cells, or enter new values in the input fields to define new dimensions for the grid.
 
 The main logic of the app is controller in the `Grid.vue` and `Vuex Store` files.
 
-The main function that takes care of infecting cells is located in `/src/utils/infectCell.js`.
-Its job is to confirm the possibility of infecting a cell in a specific direction passed in and infect or skip the infection if it is not possible.
+The main function that takes care of spreading the water to adjacent cells is located in `/src/utils/spreadWater.js`.
+Its job is to confirm the possibility of spreading water in a specific direction passed in and spread the water or skip the turn if it is not possible.
 
 ## Installation
 
@@ -126,6 +126,12 @@ When contributing, please make sure to add tests for new code.
 Reach out to me with any questions via email:  
 sd32@pm.me
 
-## Contributors
+## Authors
 
 Maksim Verkhoturov
+
+# Attribution
+
+- Hot spring icon made by [smalllikeart](https://flaticon.com/authors/smalllikeart) from [flaticon.com](https://flaticon.com/)
+- Icons for cells made from the official gameplay screenshot of [`Heroes® of Might & Magic® III - HD Edition`](https://store.steampowered.com/app/297000/Heroes_of_Might__Magic_III__HD_Edition/) by Maksim Verkhoturov
+  [!["Heroes® of Might & Magic® III - HD Edition" gameplay screenshot](.github/assets/ss_548367faf1cfa549c88585cb9b01f13b05b05ab7.1920x1080.jpg)](https://cdn.cloudflare.steamstatic.com/steam/apps/297000/ss_548367faf1cfa549c88585cb9b01f13b05b05ab7.1920x1080.jpg)

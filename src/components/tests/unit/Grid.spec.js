@@ -7,16 +7,16 @@ import { shallowMount } from '@vue/test-utils'
 import Grid from '../../Grid.vue'
 
 const requiredComputed = {
-  pandemicInProgress() {
+  v() {
     return false
   },
   grid() {
     return false
   },
-  maximumInfection() {
+  fullSpringsReach() {
     return false
   },
-  pandemicDate() {
+  springsDate() {
     return false
   }
 }
@@ -56,32 +56,32 @@ describe('showLabel method output', () => {
     const noStyle = wrapper.vm.showLabel(null)
     expect(noStyle).toBe('cell')
   })
-  it('returns `immune cell` class when `immune` is passed', () => {
+  it('returns `rocks cell` class when `rocks` is passed', () => {
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMock },
       computed: requiredComputed
     })
-    const immuneStyle = wrapper.vm.showLabel('immune')
-    expect(immuneStyle).toBe('immune cell')
+    const cellStyle = wrapper.vm.showLabel('rocks')
+    expect(cellStyle).toBe('rocks cell')
   })
-  it('returns `infection cell` class when `infection` is passed', () => {
+  it('returns `dig cell` class when `dig` is passed', () => {
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMock },
       computed: requiredComputed
     })
-    const infectionStyle = wrapper.vm.showLabel('infection')
-    expect(infectionStyle).toBe('infection cell')
+    const cellStyle = wrapper.vm.showLabel('dig')
+    expect(cellStyle).toBe('dig cell')
   })
 })
 describe('changeState method output and error handling', () => {
-  it('stops further execution when `pandemicInProgress` is true', () => {
+  it('stops further execution when `v` is true', () => {
     const event = { target: { dataset: { index: '1.2' } } }
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMockWithDispatch },
-      data: () => ({ actionInput: 'infection' }),
+      data: () => ({ actionInput: 'dig' }),
       computed: {
         ...requiredComputed,
-        pandemicInProgress() {
+        v() {
           return true
         }
       }
@@ -89,7 +89,7 @@ describe('changeState method output and error handling', () => {
     wrapper.vm.changeState(event)
     expect(wrapper.vm.$store.dispatch).not.toHaveBeenCalled()
   })
-  it('stops further execution and shows error when neither `infection` nor `immune` is passed', () => {
+  it('stops further execution and shows error when neither `dig` nor `rocks` is passed', () => {
     const event = { target: { dataset: { index: '1.2' } } }
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMockWithDispatch },
@@ -101,14 +101,14 @@ describe('changeState method output and error handling', () => {
     wrapper.vm.changeState(event)
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledWith(
       'showError',
-      'No option selected (infect or immune)'
+      'No option selected (dig or rocks)'
     )
   })
   it('dispatches `changeState` when proper input is passed', () => {
     const event = { target: { dataset: { index: '1.2' } } }
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMockWithDispatch },
-      data: () => ({ actionInput: 'immune' }),
+      data: () => ({ actionInput: 'rocks' }),
       computed: {
         ...requiredComputed
       }
@@ -117,7 +117,7 @@ describe('changeState method output and error handling', () => {
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledWith('changeState', {
       rowI: '1',
       cellI: '2',
-      action: 'immune'
+      action: 'rocks'
     })
   })
 })

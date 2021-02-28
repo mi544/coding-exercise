@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-function infectCell({ rowI, cellI }, direction, grid, dimensions, commit) {
+function spreadWater({ rowI, cellI }, direction, grid, dimensions, commit) {
   switch (direction) {
     case 'left':
       if (cellI === 0) {
@@ -8,7 +8,7 @@ function infectCell({ rowI, cellI }, direction, grid, dimensions, commit) {
         break
       }
       if (grid[rowI][cellI - 1].value === null) {
-        commit('SET_CELL_STATE', { rowI, cellI: cellI - 1, action: 'infection' })
+        commit('SET_CELL_STATE', { rowI, cellI: cellI - 1, action: 'water' })
       }
       break
     case 'right':
@@ -17,7 +17,7 @@ function infectCell({ rowI, cellI }, direction, grid, dimensions, commit) {
         break
       }
       if (grid[rowI][cellI + 1].value === null) {
-        commit('SET_CELL_STATE', { rowI, cellI: cellI + 1, action: 'infection' })
+        commit('SET_CELL_STATE', { rowI, cellI: cellI + 1, action: 'water' })
       }
       break
     case 'top':
@@ -26,7 +26,7 @@ function infectCell({ rowI, cellI }, direction, grid, dimensions, commit) {
         break
       }
       if (grid[rowI - 1][cellI].value === null) {
-        commit('SET_CELL_STATE', { rowI: rowI - 1, cellI, action: 'infection' })
+        commit('SET_CELL_STATE', { rowI: rowI - 1, cellI, action: 'water' })
       }
       break
     case 'bottom':
@@ -35,11 +35,11 @@ function infectCell({ rowI, cellI }, direction, grid, dimensions, commit) {
         break
       }
       if (grid[rowI + 1][cellI].value === null) {
-        commit('SET_CELL_STATE', { rowI: rowI + 1, cellI, action: 'infection' })
+        commit('SET_CELL_STATE', { rowI: rowI + 1, cellI, action: 'water' })
       }
       break
     default:
   }
 }
 
-export { infectCell }
+export { spreadWater }

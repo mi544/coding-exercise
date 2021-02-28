@@ -8,24 +8,24 @@
           <input
             type="radio"
             name="action"
-            id="infection-radio"
-            value="infection"
+            id="dig-radio"
+            value="dig"
             v-model="actionInput"
             checked="true"
-            :disabled="pandemicInProgress"
+            :disabled="springsInProgress"
           />
-          <label for="infection-radio" class="text-lg">Infection</label>
+          <label for="dig-radio" class="text-lg">Dig a hot spring</label>
         </div>
         <div class="border-4 my-1 p-1 pt-2 rounded-lg">
           <input
             type="radio"
             name="action"
-            id="immune-radio"
-            value="immune"
+            id="rocks-radio"
+            value="rocks"
             v-model="actionInput"
-            :disabled="pandemicInProgress"
+            :disabled="springsInProgress"
           />
-          <label for="immune-radio" class="text-lg">Immune</label>
+          <label for="rocks-radio" class="text-lg">Put rocks around</label>
         </div>
       </form>
     </div>
@@ -44,19 +44,19 @@
       <button
         class="button-md text-lg"
         @click.prevent="startSimulation"
-        :disabled="pandemicInProgress"
+        :disabled="springsInProgress"
       >
-        Simulate Pandemic
+        Let the water run
       </button>
       <button
         class="button-md text-lg my-6"
         @click.prevent="resetGrid"
-        :disabled="pandemicInProgress"
+        :disabled="springsInProgress"
       >
         Reset
       </button>
-      <p v-if="maximumInfection">Maximum infection reached on</p>
-      <p v-if="pandemicDate">{{ date }}</p>
+      <p v-if="fullSpringsReach">Please enjoy your hot springs!</p>
+      <p v-if="springsDate">{{ date }}</p>
     </div>
   </div>
 </template>
@@ -67,8 +67,8 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'Grid',
   data: () => ({
-    actionInput: 'infection',
-    pandemicInterval: null
+    actionInput: 'dig',
+    springsInterval: null
   }),
   computed: {
     ...mapGetters([
@@ -77,12 +77,12 @@ export default {
       'grid',
       'previousGrid',
       'isGrid',
-      'pandemicInProgress',
-      'pandemicDate',
-      'maximumInfection'
+      'springsInProgress',
+      'springsDate',
+      'fullSpringsReach'
     ]),
     date() {
-      const time = new Date(this.pandemicDate)
+      const time = new Date(this.springsDate)
       return `${time.getMonth() + 1}/${time.getDate()}/${time.getFullYear()}`
     }
   },
@@ -90,64 +90,66 @@ export default {
     showLabel(value) {
       // returns proper class based on cell state
       if (value === null) return 'cell'
-      if (value === 'immune') return 'immune cell'
-      if (value === 'infection') return 'infection cell'
+      if (value === 'rocks') return 'cell rocks'
+      if (value === 'water') return this.springsDate ? 'cell water' : 'cell dig'
       return 'cell'
     },
     changeState(event) {
-      // should not be able to adjust the infection once the pandemic has started
-      if (this.pandemicInProgress) return
+      // should not be able to adjust the dug cells once the simulation has started
+      if (this.springsInProgress) return
 
       // no radio button selected
-      if (this.actionInput !== 'infection' && this.actionInput !== 'immune') {
-        this.$store.dispatch('showError', 'No option selected (infect or immune)')
+      if (this.actionInput !== 'dig' && this.actionInput !== 'rocks') {
+        this.$store.dispatch('showError', 'No option selected (dig or rocks)')
         return
       }
 
       // getting cell coordinates & updating its state
       const [rowI, cellI] = event.target.dataset.index.split('.')
-      this.$store.dispatch('changeState', { rowI, cellI, action: this.actionInput })
+      // if dig selected - change the clicked cell to water, otherwise use rocks
+      const action = this.actionInput === 'dig' ? 'water' : 'rocks'
+      this.$store.dispatch('changeState', { rowI, cellI, action })
     },
     startSimulation() {
-      this.$store.commit('SET_PANDEMIC_DATE', new Date().getTime())
-      // checks if there's at least one infection on the grid
-      let infectedCells = false
+      this.$store.commit('SET_SPRINGS_DATE', new Date().getTime())
+      // checks if there's at least one water cell on the grid
+      let waterCells = false
       for (let i = 0; i < this.grid.length; i += 1) {
         for (let c = 0; c < this.grid[i].length; c += 1) {
-          if (infectedCells) break
-          if (this.grid[i][c].value === 'infection') {
-            infectedCells = true
+          if (waterCells) break
+          if (this.grid[i][c].value === 'water') {
+            waterCells = true
             break
           }
         }
       }
 
-      if (!infectedCells) {
-        this.$store.dispatch('showError', 'No cells are infected')
+      if (!waterCells) {
+        this.$store.dispatch('showError', 'No cells are dug out')
         return
       }
 
-      clearInterval(this.pandemicInterval)
-      this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', true)
+      clearInterval(this.springsInterval)
+      this.$store.commit('TOGGLE_SPRING_IN_PROGRESS', true)
 
-      // setting an interval up to dispatch infections
-      this.pandemicInterval = setInterval(async () => {
-        const result = await this.$store.dispatch('infectNext')
+      // setting an interval up to dispatch spreadNext
+      this.springsInterval = setInterval(async () => {
+        const result = await this.$store.dispatch('spreadNext')
         if (result) {
-          this.$store.commit('TOGGLE_PANDEMIC_IN_PROGRESS', false)
-          clearInterval(this.pandemicInterval)
-          this.$store.commit('SET_MAXIMUM_INFECTION', true)
+          this.$store.commit('TOGGLE_SPRING_IN_PROGRESS', false)
+          clearInterval(this.springsInterval)
+          this.$store.commit('SET_FULL_SPRINGS_REACH', true)
           return
         }
         // adding 1 day to the date
-        const nextDay = new Date(this.pandemicDate + 24 * 60 * 60 * 1000)
-        this.$store.commit('SET_PANDEMIC_DATE', nextDay.getTime())
-      }, 1 * 1000)
+        const nextDay = new Date(this.springsDate + 24 * 60 * 60 * 1000)
+        this.$store.commit('SET_SPRINGS_DATE', nextDay.getTime())
+      }, 750)
     },
     resetGrid() {
-      this.$store.commit('SET_PANDEMIC_DATE', null)
-      this.$store.commit('SET_MAXIMUM_INFECTION', false)
-      clearInterval(this.pandemicInterval)
+      this.$store.commit('SET_SPRINGS_DATE', null)
+      this.$store.commit('SET_FULL_SPRINGS_REACH', false)
+      clearInterval(this.springsInterval)
       this.$store.dispatch('createGrid', { height: this.height, width: this.width })
     }
   }
@@ -157,6 +159,8 @@ export default {
 <style lang="scss">
 .row {
   .cell {
+    background: url('../assets/earth.jpg');
+    background-size: cover;
     border-width: 2px 2px 0 0;
     width: 50px;
     height: 50px;
@@ -172,11 +176,18 @@ export default {
     }
   }
 }
-.infection {
-  @apply bg-red-300;
+.dig {
+  background: url('../assets/dig.jpg') !important;
+  background-size: cover !important;
 }
 
-.immune {
-  @apply bg-green-300;
+.rocks {
+  background: url('../assets/rocks.jpg') !important;
+  background-size: cover !important;
+}
+
+.water {
+  background: url('../assets/water.jpg') !important;
+  background-size: cover !important;
 }
 </style>

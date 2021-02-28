@@ -10,7 +10,7 @@
         id="height"
         type="number"
         class="text-lg border-2 rounded my-2 p-1"
-        :disabled="pandemicInProgress"
+        :disabled="springsInProgress"
       />
       <label for="width" class="text-lg block">Width:</label>
       <input
@@ -18,9 +18,9 @@
         id="width"
         type="number"
         class="text-lg border-2 rounded my-2 p-1"
-        :disabled="pandemicInProgress"
+        :disabled="springsInProgress"
       />
-      <button class="button-lg mt-4" :disabled="pandemicInProgress">Create Grid</button>
+      <button class="button-lg mt-4" :disabled="springsInProgress">Create Grid</button>
       <p
         :class="[
           error ? 'opacity-1' : 'opacity-0 hidden',
@@ -52,13 +52,13 @@ import { mapGetters } from 'vuex'
 import Grid from './Grid.vue'
 
 export default {
-  name: 'PandemicSimulator',
+  name: 'HotSprings',
   components: { Grid },
   data: () => ({
     heightInput: null,
     widthInput: null
   }),
-  computed: { ...mapGetters(['pandemicInProgress', 'isGrid', 'error']) },
+  computed: { ...mapGetters(['springsInProgress', 'isGrid', 'error']) },
   methods: {
     createGrid() {
       if (!Number.isInteger(this.heightInput) || !Number.isInteger(this.widthInput)) {
@@ -66,17 +66,17 @@ export default {
         return
       }
 
-      if (this.heightInput > 128 || this.widthInput > 128) {
+      if (this.heightInput > 20 || this.widthInput > 20) {
         this.$store.dispatch(
           'showError',
-          'Number provided is too big, please provide a number less than 128'
+          'Number provided is too big, please provide a number less than 20'
         )
         this.heightInput = null
         this.widthInput = null
         return
       }
 
-      if (this.heightInput < 0 || this.widthInput < 0) {
+      if (this.heightInput < 1 || this.widthInput < 1) {
         this.$store.dispatch(
           'showError',
           'Number provided is too small, please provide a number greater than 1'
@@ -86,8 +86,8 @@ export default {
         return
       }
 
-      this.$store.commit('SET_PANDEMIC_DATE', null)
-      this.$store.commit('SET_MAXIMUM_INFECTION', false)
+      this.$store.commit('SET_SPRINGS_DATE', null)
+      this.$store.commit('SET_FULL_SPRINGS_REACH', false)
       this.$store.commit('SET_ERROR', null)
       this.$store.dispatch('createGrid', {
         height: this.heightInput,
