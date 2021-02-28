@@ -133,4 +133,5 @@ Maksim Verkhoturov
 # Attribution
 
 - Hot spring icon made by [smalllikeart](https://flaticon.com/authors/smalllikeart) from [flaticon.com](https://flaticon.com/)
-- Icons for cells made from the official [Steam screenshot](https://cdn.cloudflare.steamstatic.com/steam/apps/297000/ss_548367faf1cfa549c88585cb9b01f13b05b05ab7.1920x1080.jpg) of [Heroes® of Might & Magic® III - HD Edition](https://store.steampowered.com/app/297000/Heroes_of_Might__Magic_III__HD_Edition/) by Maksim Verkhoturov
+- Icons for cells made from the official gameplay screenshot of [`Heroes® of Might & Magic® III - HD Edition`](https://store.steampowered.com/app/297000/Heroes_of_Might__Magic_III__HD_Edition/) by Maksim Verkhoturov
+  [!["Heroes® of Might & Magic® III - HD Edition" gameplay screenshot](.github/assets/ss_548367faf1cfa549c88585cb9b01f13b05b05ab7.1920x1080.jpg)](https://cdn.cloudflare.steamstatic.com/steam/apps/297000/ss_548367faf1cfa549c88585cb9b01f13b05b05ab7.1920x1080.jpg)
