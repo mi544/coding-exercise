@@ -48,7 +48,7 @@ It is a Vue.js (v2) application that utilizes Vuex store extensively.
 
 `App.vue` is the first component to load, and it mainly takes care of the routes, as well as information that should be displayed on all the pages.
 
-All the logic happens inside of the `Grid.vue` and `PandemicSimulator.vue` components. `PandemicSimulator` takes user input (dimensions of the grid), passes it to Vuex, and invokes the `Grid` component to render a grid.
+All the logic happens inside of the `Grid.vue` and `HotSprings.vue` components. `HotSprings` takes user input (dimensions of the grid), passes it to Vuex, and invokes the `Grid` component to render a grid.
 
 The `Grid` component renders the grid and allows to interact with it by clicking on the cells directly.
 The user can choose which points should be infected, and which points - immune.

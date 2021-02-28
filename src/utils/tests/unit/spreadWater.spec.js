@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import { infectCell } from '../../infectCell'
+import { spreadWater } from '../../spreadWater'
 
 const commit = jest.fn()
 
@@ -24,69 +24,69 @@ const mockGrid = [
 
 const mockDimensions = { height: 3, width: 3 }
 
-describe('infectCell', () => {
+describe('spreadWater', () => {
   it('does not do anything when LEFT for TOP LEFT CELL', () => {
     const [rowI, cellI] = [0, 0]
     const direction = 'left'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).not.toHaveBeenCalled()
   })
   it('does not do anything when RIGHT for TOP RIGHT CELL', () => {
     const [rowI, cellI] = [0, 2]
     const direction = 'right'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).not.toHaveBeenCalled()
   })
   it('does not do anything when TOP for TOP RIGHT CELL', () => {
     const [rowI, cellI] = [0, 2]
     const direction = 'top'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).not.toHaveBeenCalled()
   })
   it('does not do anything when BOTTOM for BOTTOM LEFT CELL', () => {
     const [rowI, cellI] = [2, 0]
     const direction = 'bottom'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).not.toHaveBeenCalled()
   })
-  it('infects left cell when LEFT for MIDDLE CELL', () => {
+  it('spreads water left cell when LEFT for MIDDLE CELL', () => {
     const [rowI, cellI] = [1, 1]
     const direction = 'left'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).toHaveBeenCalledWith('SET_CELL_STATE', {
       rowI,
       cellI: cellI - 1,
-      action: 'infection'
+      action: 'water'
     })
   })
-  it('infects right cell when RIGHT for MIDDLE CELL', () => {
+  it('spreads water right cell when RIGHT for MIDDLE CELL', () => {
     const [rowI, cellI] = [1, 1]
     const direction = 'right'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).toHaveBeenCalledWith('SET_CELL_STATE', {
       rowI,
       cellI: cellI + 1,
-      action: 'infection'
+      action: 'water'
     })
   })
-  it('infects top cell when TOP for MIDDLE CELL', () => {
+  it('spreads water top cell when TOP for MIDDLE CELL', () => {
     const [rowI, cellI] = [1, 1]
     const direction = 'top'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).toHaveBeenCalledWith('SET_CELL_STATE', {
       rowI: rowI - 1,
       cellI,
-      action: 'infection'
+      action: 'water'
     })
   })
-  it('infects bottom cell when BOTTOM for MIDDLE CELL', () => {
+  it('spreads water bottom cell when BOTTOM for MIDDLE CELL', () => {
     const [rowI, cellI] = [1, 1]
     const direction = 'bottom'
-    infectCell({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
+    spreadWater({ rowI, cellI }, direction, mockGrid, mockDimensions, commit)
     expect(commit).toHaveBeenCalledWith('SET_CELL_STATE', {
       rowI: rowI + 1,
       cellI,
-      action: 'infection'
+      action: 'water'
     })
   })
 })

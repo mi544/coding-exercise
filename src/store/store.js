@@ -1,17 +1,17 @@
 /* eslint-disable no-shadow */
 import Vue from 'vue'
-import { infectCell } from '../utils'
+import { spreadWater } from '../utils'
 
 export const state = {
   grid: null,
   previousGrid: null,
   height: null,
   width: null,
-  pandemicInProgress: false,
-  pandemicDate: null,
+  springsInProgress: false,
+  springsDate: null,
   error: null,
   errorTimer: null,
-  maximumInfection: null
+  fullSpringsReach: null
 }
 
 export const getters = {
@@ -30,17 +30,17 @@ export const getters = {
   isGrid(state) {
     return state.grid !== null
   },
-  pandemicInProgress(state) {
-    return state.pandemicInProgress
+  springsInProgress(state) {
+    return state.springsInProgress
   },
-  pandemicDate(state) {
-    return state.pandemicDate
+  springsDate(state) {
+    return state.springsDate
   },
   error(state) {
     return state.error
   },
-  maximumInfection(state) {
-    return state.maximumInfection
+  fullSpringsReach(state) {
+    return state.fullSpringsReach
   }
 }
 
@@ -56,20 +56,20 @@ export const mutations = {
     // state.grid[rowI][cellI].value = action
     Vue.set(state.grid[rowI][cellI], 'value', action)
   },
-  TOGGLE_PANDEMIC_IN_PROGRESS(state, value) {
-    state.pandemicInProgress = value
+  TOGGLE_SPRING_IN_PROGRESS(state, value) {
+    state.springsInProgress = value
   },
   COPY_GRID_AND_STRINGIFY(state) {
     state.previousGrid = JSON.stringify(state.grid)
   },
-  SET_PANDEMIC_DATE(state, date) {
-    state.pandemicDate = date
+  SET_SPRINGS_DATE(state, date) {
+    state.springsDate = date
   },
   SET_ERROR(state, error) {
     state.error = error
   },
-  SET_MAXIMUM_INFECTION(state, infectionState) {
-    state.maximumInfection = infectionState
+  SET_FULL_SPRINGS_REACH(state, springsState) {
+    state.fullSpringsReach = springsState
   }
 }
 
@@ -95,25 +95,25 @@ export const actions = {
     }
     commit('SET_CELL_STATE', { rowI, cellI, action })
   },
-  infectNext({ state, commit }) {
+  spreadNext({ state, commit }) {
     return new Promise((resolve) => {
       commit('COPY_GRID_AND_STRINGIFY')
       const dimensions = { width: this.state.width, height: this.state.height }
-      const infectedCells = []
-      // gather all infected cells coordinates
+      const waterCells = []
+      // gather all water cells coordinates
       state.grid.forEach((row, rowI) => {
         row.forEach((cell, cellI) => {
-          if (cell.value === 'infection') {
-            infectedCells.push({ rowI, cellI })
+          if (cell.value === 'water') {
+            waterCells.push({ rowI, cellI })
           }
         })
       })
-      // infect all adjacent cells
-      infectedCells.forEach(({ rowI, cellI }) => {
-        infectCell({ rowI, cellI }, 'left', state.grid, dimensions, commit)
-        infectCell({ rowI, cellI }, 'right', state.grid, dimensions, commit)
-        infectCell({ rowI, cellI }, 'top', state.grid, dimensions, commit)
-        infectCell({ rowI, cellI }, 'bottom', state.grid, dimensions, commit)
+      // spread water for all adjacent cells
+      waterCells.forEach(({ rowI, cellI }) => {
+        spreadWater({ rowI, cellI }, 'left', state.grid, dimensions, commit)
+        spreadWater({ rowI, cellI }, 'right', state.grid, dimensions, commit)
+        spreadWater({ rowI, cellI }, 'top', state.grid, dimensions, commit)
+        spreadWater({ rowI, cellI }, 'bottom', state.grid, dimensions, commit)
       })
       // check if any changes were made and return the result
       resolve(JSON.stringify(state.grid) === state.previousGrid)

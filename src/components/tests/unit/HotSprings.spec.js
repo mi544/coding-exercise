@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
-import PandemicSimulator from '../../PandemicSimulator.vue'
+import HotSprings from '../../HotSprings.vue'
 
 // defining required properties to mock them later
 const requiredComputed = {
-  pandemicInProgress() {
+  springsInProgress() {
     return false
   },
   error() {
@@ -30,16 +30,16 @@ const storeMockWithDispatchAndCommit = {
   commit: jest.fn()
 }
 
-describe('PandemicSimulator', () => {
+describe('HotSprings', () => {
   it('mounts successfully', () => {
-    const wrapper = shallowMount(PandemicSimulator, {
+    const wrapper = shallowMount(HotSprings, {
       mocks: { $store: storeMock },
       computed: requiredComputed
     })
     expect(wrapper.exists()).toBeTruthy()
   })
   it('matches snapshot', () => {
-    const wrapper = shallowMount(PandemicSimulator, {
+    const wrapper = shallowMount(HotSprings, {
       mocks: { $store: storeMock },
       computed: requiredComputed
     })
@@ -48,10 +48,10 @@ describe('PandemicSimulator', () => {
   })
 })
 
-describe('PandemicSimulator error handler', () => {
+describe('HotSprings error handler', () => {
   // displays error if height and width are not integers
   it('displays error if height and width are floats', () => {
-    const wrapper = shallowMount(PandemicSimulator, {
+    const wrapper = shallowMount(HotSprings, {
       mocks: { $store: storeMockWithDispatch },
       data: () => ({
         heightInput: 0.5,
@@ -66,7 +66,7 @@ describe('PandemicSimulator error handler', () => {
     )
   })
   it('displays error if height and width are > 128', () => {
-    const wrapper = shallowMount(PandemicSimulator, {
+    const wrapper = shallowMount(HotSprings, {
       mocks: { $store: storeMockWithDispatch },
       data: () => ({
         heightInput: 130,
@@ -81,7 +81,7 @@ describe('PandemicSimulator error handler', () => {
     )
   })
   it('displays error if height and width are < 0', () => {
-    const wrapper = shallowMount(PandemicSimulator, {
+    const wrapper = shallowMount(HotSprings, {
       mocks: { $store: storeMockWithDispatch },
       data: () => ({
         heightInput: -5,
@@ -96,7 +96,7 @@ describe('PandemicSimulator error handler', () => {
     )
   })
   it('invokes proper commits with proper height and width input', () => {
-    const wrapper = shallowMount(PandemicSimulator, {
+    const wrapper = shallowMount(HotSprings, {
       mocks: { $store: storeMockWithDispatchAndCommit },
       data: () => ({
         heightInput: 5,
@@ -106,10 +106,10 @@ describe('PandemicSimulator error handler', () => {
     })
     wrapper.vm.createGrid()
 
-    expect(wrapper.vm.$store.commit).toHaveBeenNthCalledWith(1, 'SET_PANDEMIC_DATE', null)
+    expect(wrapper.vm.$store.commit).toHaveBeenNthCalledWith(1, 'SET_SPRINGS_DATE', null)
     expect(wrapper.vm.$store.commit).toHaveBeenNthCalledWith(
       2,
-      'SET_MAXIMUM_INFECTION',
+      'SET_FULL_SPRINGS_REACH',
       false
     )
     expect(wrapper.vm.$store.commit).toHaveBeenNthCalledWith(3, 'SET_ERROR', null)

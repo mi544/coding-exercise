@@ -1,8 +1,6 @@
 <template>
   <div class="about">
-    <article
-      class="bg-blue-50 sm:w-3/4 md:w-1/2 mx-6 sm:mx-auto md:mr-8 mt-4 mb-12 md:mb-2 p-2 pt-6 sm:p-6 shadow-xl text-lg sm:text-xl"
-    >
+    <article class="article1">
       <img src="../assets/virus2.svg" alt="virus icon" class="max-w-1/3 mx-auto" />
       <p class="my-4">
         This simple mini-project allows to see inside the pandemic and understand how
@@ -49,3 +47,9 @@
     </article>
   </div>
 </template>
+
+<style lang="scss">
+.article1 {
+  @apply bg-blue-50 sm:w-3/4 md:w-1/2 mx-6 sm:mx-auto md:mr-8 mt-4 mb-12 md:mb-2 p-2 pt-36 sm:p-6 shadow-xl text-lg sm:text-xl;
+}
+</style>

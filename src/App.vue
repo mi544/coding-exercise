@@ -5,12 +5,12 @@
   >
     <header>
       <nav
-        class="p-5 mb-4 bg-green-50 shadow-md flex justify-center items-center text-xl xs:text-2xl"
+        class="p-5 mb-4 bg-blue-50 shadow-md flex justify-center items-center text-xl xs:text-2xl"
       >
         <img
-          alt="virus logo"
-          src="./assets/virus.svg"
-          class="w-1/4 xs:max-w-sm-icon sm:max-w-md-icon inline-block"
+          alt="hot springs logo"
+          src="./assets/dig.jpg"
+          class="w-1/4 xs:max-w-sm-icon sm:max-w-md-icon inline-block rounded-xl"
         />
         <ul class="flex w-3/4 justify-center">
           <li><router-link to="/">Home</router-link></li>
@@ -20,7 +20,7 @@
     </header>
     <router-view class="flex-1" />
     <footer class="flex-0 mt-24">
-      <h5 class="p-5 bg-green-100 text-xl font-medium">Pandemic Simulator</h5>
+      <h5 class="p-5 bg-blue-50 text-xl font-medium">Hot Springs Simulator</h5>
     </footer>
   </main>
 </template>
@@ -38,7 +38,7 @@ a {
   @apply text-vblue font-bold;
 
   &.router-link-exact-active {
-    @apply text-vgreen;
+    @apply text-blue-500;
   }
 }
 

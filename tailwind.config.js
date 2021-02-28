@@ -19,8 +19,7 @@ module.exports = {
   theme: {
     colors: {
       ...colors,
-      vblue: '#2c3e50',
-      vgreen: '#42b983'
+      vblue: '#2c3e50'
     },
     width,
     maxWidth: { ...width },
