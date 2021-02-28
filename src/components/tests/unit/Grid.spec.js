@@ -7,7 +7,7 @@ import { shallowMount } from '@vue/test-utils'
 import Grid from '../../Grid.vue'
 
 const requiredComputed = {
-  v() {
+  springsInProgress() {
     return false
   },
   grid() {
@@ -56,32 +56,45 @@ describe('showLabel method output', () => {
     const noStyle = wrapper.vm.showLabel(null)
     expect(noStyle).toBe('cell')
   })
-  it('returns `rocks cell` class when `rocks` is passed', () => {
+  it('returns `cell rocks` class when `rocks` is passed', () => {
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMock },
       computed: requiredComputed
     })
     const cellStyle = wrapper.vm.showLabel('rocks')
-    expect(cellStyle).toBe('rocks cell')
+    expect(cellStyle).toBe('cell rocks')
   })
-  it('returns `dig cell` class when `dig` is passed', () => {
+  it('returns `cell dig` class when `water` is passed (if `springsDate` is false)', () => {
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMock },
       computed: requiredComputed
     })
-    const cellStyle = wrapper.vm.showLabel('dig')
-    expect(cellStyle).toBe('dig cell')
+    const cellStyle = wrapper.vm.showLabel('water')
+    expect(cellStyle).toBe('cell dig')
+  })
+  it('returns `cell water` class when `water` is passed (if `springsDate` is true)', () => {
+    const wrapper = shallowMount(Grid, {
+      mocks: { $store: storeMock },
+      computed: {
+        ...requiredComputed,
+        springsDate() {
+          return true
+        }
+      }
+    })
+    const cellStyle = wrapper.vm.showLabel('water')
+    expect(cellStyle).toBe('cell water')
   })
 })
 describe('changeState method output and error handling', () => {
-  it('stops further execution when `v` is true', () => {
+  it('stops further execution when `springsInProgress` is true', () => {
     const event = { target: { dataset: { index: '1.2' } } }
     const wrapper = shallowMount(Grid, {
       mocks: { $store: storeMockWithDispatch },
       data: () => ({ actionInput: 'dig' }),
       computed: {
         ...requiredComputed,
-        v() {
+        springsInProgress() {
           return true
         }
       }

@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Grid matches snapshot 1`] = `
+<div
+  class="flex flex-col md:flex-row justify-around md:justify-evenly items-center md:items-start mt-4 md:my-24"
+>
+  <div>
+    <form>
+      <div
+        class="border-4 my-1 p-1 pt-2 rounded-lg"
+      >
+        <input
+          checked="checked"
+          id="dig-radio"
+          name="action"
+          type="radio"
+          value="dig"
+        />
+         
+        <label
+          class="text-lg"
+          for="dig-radio"
+        >
+          Dig a hot spring
+        </label>
+      </div>
+       
+      <div
+        class="border-4 my-1 p-1 pt-2 rounded-lg"
+      >
+        <input
+          id="rocks-radio"
+          name="action"
+          type="radio"
+          value="rocks"
+        />
+         
+        <label
+          class="text-lg"
+          for="rocks-radio"
+        >
+          Put rocks around
+        </label>
+      </div>
+    </form>
+  </div>
+   
+  <div
+    class="max-w-3/4"
+  />
+   
+  <div>
+    <button
+      class="button-md text-lg"
+    >
+      
+      Let the water run
+    
+    </button>
+     
+    <button
+      class="button-md text-lg my-6"
+    >
+      
+      Reset
+    
+    </button>
+     
+    <!---->
+     
+    <!---->
+  </div>
+</div>
+`;
